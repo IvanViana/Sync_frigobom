@@ -1,0 +1,17 @@
+<?xml version="1.0" standalone="yes"?>
+<Conexores>
+  <Conexao>
+    <tipo>azure</tipo>
+    <servidor>tadeu.database.windows.net</servidor>
+    <usuario>tadeu</usuario>
+    <senha>Frigobom123!</senha>
+    <banco>frigobom</banco>
+  </Conexao>
+  <Conexao>
+    <tipo>fb</tipo>
+    <servidor>localhost</servidor>
+    <usuario>SYSDBA</usuario>
+    <senha>masterkey</senha>
+    <banco>C:/Users/Ivan/Documents/FRIGOBOM DADOS.FDB/DADOS.FDB</banco>
+  </Conexao>
+</Conexores>
