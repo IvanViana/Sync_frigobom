@@ -42,9 +42,11 @@
             this.label10 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.num_hora = new System.Windows.Forms.NumericUpDown();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.mynotifyicon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.logLocalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logAzureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_hora)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -63,7 +65,7 @@
             this.exportaçãoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(393, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(392, 24);
             this.menuStrip1.TabIndex = 24;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -107,6 +109,9 @@
             // 
             // exportaçãoToolStripMenuItem
             // 
+            this.exportaçãoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.logLocalToolStripMenuItem,
+            this.logAzureToolStripMenuItem});
             this.exportaçãoToolStripMenuItem.Name = "exportaçãoToolStripMenuItem";
             this.exportaçãoToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.exportaçãoToolStripMenuItem.Text = "Log";
@@ -148,17 +153,6 @@
             0,
             0});
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::frigobom_c.Properties.Resources.frigo;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 27);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(390, 383);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 31;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.WaitOnLoad = true;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -183,11 +177,37 @@
             this.mynotifyicon.Visible = true;
             this.mynotifyicon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mynotifyicon_MouseDoubleClick);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::frigobom_c.Properties.Resources.frigo;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(390, 383);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 31;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.WaitOnLoad = true;
+            // 
+            // logLocalToolStripMenuItem
+            // 
+            this.logLocalToolStripMenuItem.Name = "logLocalToolStripMenuItem";
+            this.logLocalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logLocalToolStripMenuItem.Text = "Log Local";
+            this.logLocalToolStripMenuItem.Click += new System.EventHandler(this.logLocalToolStripMenuItem_Click);
+            // 
+            // logAzureToolStripMenuItem
+            // 
+            this.logAzureToolStripMenuItem.Name = "logAzureToolStripMenuItem";
+            this.logAzureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logAzureToolStripMenuItem.Text = "Log Azure";
+            this.logAzureToolStripMenuItem.Click += new System.EventHandler(this.logAzureToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(393, 473);
+            this.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ClientSize = new System.Drawing.Size(392, 449);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.num_hora);
@@ -227,6 +247,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NotifyIcon mynotifyicon;
         public System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem logLocalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logAzureToolStripMenuItem;
     }
 }
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Data.SqlClient;
+using EnCryptDecrypt;
 
 namespace frigobom_c
 {
@@ -33,6 +34,10 @@ namespace frigobom_c
                 return;
             }
 
+            string clearText = txt_azure_pass.Text.Trim();
+            string cipherText = CryptorEngine.Encrypt(clearText, true);
+
+
             int reg;
             using (DataSet dsResultado = new DataSet())
             {
@@ -50,7 +55,7 @@ namespace frigobom_c
                         dsResultado.Tables[0].Rows[reg][0] = "azure";
                         dsResultado.Tables[0].Rows[reg][1] = txt_azure_ds.Text;
                         dsResultado.Tables[0].Rows[reg][2] = txt_azure_user.Text;
-                        dsResultado.Tables[0].Rows[reg][3] = txt_azure_pass.Text;
+                        dsResultado.Tables[0].Rows[reg][3] = cipherText;
                         dsResultado.Tables[0].Rows[reg][4] = txt_azure_db.Text;
                         dsResultado.WriteXml(CaminhoDadosXML(caminho) + @"Dados\Conexoes.xml", XmlWriteMode.IgnoreSchema);
                         MessageBox.Show("Login salvo.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -91,9 +96,17 @@ namespace frigobom_c
             // Executa a consulta
             foreach (var produto in prods)
             {
+
+                string cipherText = produto.senha.Trim();
+                string decryptedText = CryptorEngine.Decrypt(cipherText, true);
+                
+
+
                 txt_azure_ds.Text = produto.servidor;
                 txt_azure_user.Text = produto.usuario;
-                txt_azure_pass.Text = produto.senha;
+                txt_azure_pass.Text = decryptedText;
+                
+                //txt_azure_pass.Text = produto.senha;
                 txt_azure_db.Text = produto.banco;
             }
         }

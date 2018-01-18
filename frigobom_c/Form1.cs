@@ -15,6 +15,8 @@ using System.Xml.Linq;
 using System.Diagnostics;
 using System.Timers;
 using System.Globalization;
+using EnCryptDecrypt;
+using Microsoft.Win32;
 
 namespace frigobom_c
 {
@@ -35,16 +37,38 @@ namespace frigobom_c
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            this.WindowState = FormWindowState.Minimized;
             //timer1.Enabled = true;
             caminho = AppDomain.CurrentDomain.BaseDirectory;
+            string meuApp = caminho + "frigobom_c.exe";
             //Log log = new Log(); 
             // log.WriteEntry("Aplicação aberta!"); 
 
             // Create an EventLog instance and assign its source.
+            darPlay();
+            WriteRegistry(Registry.CurrentUser, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", "Sync_Frigobom", meuApp);
 
 
+        }
+        static void WriteRegistry(RegistryKey parentKey, String subKey, String valueName, Object value)
+        {
+            RegistryKey key;
+            try
+            {
+                key = parentKey.OpenSubKey(subKey, true);
+                if (key == null)
+                    key = parentKey.CreateSubKey(subKey);
+
+                //Set the value.
+                key.SetValue(valueName, value);
 
 
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -125,19 +149,19 @@ namespace frigobom_c
         private void toAzureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frm_ver_dados frm2 = new frm_ver_dados();
-            frm2.Show();
+            frm2.ShowDialog(this);
         }
 
         private void azureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frm_con_azure frm = new frm_con_azure();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void firebirdToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frm_con_fb frm1 = new frm_con_fb();
-            frm1.Show();
+            frm1.ShowDialog(this);
         }
 
         public static Boolean testar_conexao(string ds, string db, string user, string pass)
@@ -176,33 +200,8 @@ namespace frigobom_c
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Int16 meuvalor = (short)num_hora.Value;
-
-            if (button3.Text == "Conectar")
-            {
-                button3.Text = "Atualizando...";
-                label1.Text = "Aguardando Horário";
-                timer1.Interval = meuvalor * 1000;  //60000 minuto
-                timer1.Enabled = true;
-                Global.Login = "roda";
-
-            }
-            else
-            {
-
-                label1.Text = "Estou desligado";
-                button3.Text = "Conectar";
-                timer1.Enabled = false;
-                String oLog = ">>> Stop " + DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\r\n \r\n";
-               // string arqLog = @"C:\Users\Ivan\Documents\FRIGOBOM DADOS.FDB\LOG.sql";
-                string arqLog = CaminhoDadosXML(caminho) + @"Dados\LOG.sql";
-                StreamWriter writer1 = new StreamWriter(arqLog, true);
-                writer1.WriteLine(oLog);
-                writer1.Flush();
-                writer1.Close();
-
-            }
-            //MessageBox.Show(meuvalor.ToString(), "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            darPlay();
+            
         }
 
 
@@ -662,9 +661,15 @@ namespace frigobom_c
             // Executa a consulta
             foreach (var produto in prodx)
             {
+
+                string cipherText = produto.senha.Trim();
+                string decryptedText = CryptorEngine.Decrypt(cipherText, true);
+                
+
                 builder.DataSource = produto.servidor;
                 builder.UserID = produto.usuario;
-                builder.Password = produto.senha;
+                builder.Password = decryptedText;
+                //builder.Password = produto.senha;
                 builder.InitialCatalog = produto.banco;
                 builder.ConnectTimeout = 600;
             }
@@ -770,8 +775,7 @@ namespace frigobom_c
 
         private void exportaçãoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frm_log frm3 = new frm_log();
-            frm3.Show();
+            
 
         }
 
@@ -866,9 +870,12 @@ namespace frigobom_c
                 // Executa a consulta
                 foreach (var produto in prods)
                 {
+                    string cipherText = produto.senha.Trim();
+                    string decryptedText = CryptorEngine.Decrypt(cipherText, true);
+
                     builder.DataSource = produto.servidor;
                     builder.UserID = produto.usuario;
-                    builder.Password = produto.senha;
+                    builder.Password = decryptedText;
                     builder.InitialCatalog = produto.banco;
                     builder.ConnectTimeout = 60;
                 }
@@ -951,9 +958,14 @@ namespace frigobom_c
 
                 foreach (var produto in prodx)
                 {
+
+                    string cipherText = produto.senha.Trim();
+                    string decryptedText = CryptorEngine.Decrypt(cipherText, true);
+
                     builder.DataSource = produto.servidor;
                     builder.UserID = produto.usuario;
-                    builder.Password = produto.senha;
+                    builder.Password = decryptedText;
+                  //  builder.Password = produto.senha;
                     builder.InitialCatalog = produto.banco;
                     builder.ConnectTimeout = 5;
                 }
@@ -991,6 +1003,50 @@ namespace frigobom_c
                 
             }
         }
+
+        private void logLocalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm_log frm3 = new frm_log();
+            frm3.ShowDialog(this);
+        }
+
+        private void logAzureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm_log_azure frm4 = new frm_log_azure();
+            frm4.ShowDialog(this);
+        }
+
+        public void darPlay()
+        {
+            Int16 meuvalor = (short)num_hora.Value;
+
+            if (button3.Text == "Conectar")
+            {
+                button3.Text = "Pausar";
+                label1.Text = "Aguardando Horário";
+                timer1.Interval = meuvalor * 1000;  //60000 minuto
+                timer1.Enabled = true;
+                Global.Login = "roda";
+
+            }
+            else
+            {
+
+                label1.Text = "Estou desligado";
+                button3.Text = "Conectar";
+                timer1.Enabled = false;
+                String oLog = ">>> Stop " + DateTime.Now.ToString("dd'/'MM'/'yyyy HH:mm:ss") + "\r\n \r\n";
+                // string arqLog = @"C:\Users\Ivan\Documents\FRIGOBOM DADOS.FDB\LOG.sql";
+                string arqLog = CaminhoDadosXML(caminho) + @"Dados\LOG.sql";
+                StreamWriter writer1 = new StreamWriter(arqLog, true);
+                writer1.WriteLine(oLog);
+                writer1.Flush();
+                writer1.Close();
+
+            }
+
+        }
+
 
     }
 

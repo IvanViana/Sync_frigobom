@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txt_azure_db = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -40,6 +39,7 @@
             this.txt_azure_ds = new System.Windows.Forms.TextBox();
             this.bt_salvar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -62,16 +62,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Conexão Azure";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::frigobom_c.Properties.Resources.icon_azure_2x;
-            this.pictureBox1.Location = new System.Drawing.Point(398, 42);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 87);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 17;
-            this.pictureBox1.TabStop = false;
             // 
             // txt_azure_db
             // 
@@ -157,6 +147,16 @@
             this.button1.Text = "Testar Conexão";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::frigobom_c.Properties.Resources.icon_azure_2x;
+            this.pictureBox1.Location = new System.Drawing.Point(398, 42);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 87);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 17;
+            this.pictureBox1.TabStop = false;
             // 
             // frm_con_azure
             // 

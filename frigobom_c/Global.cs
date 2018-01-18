@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
+using EnCryptDecrypt;
 
 namespace frigobom_c
 {
@@ -79,9 +80,14 @@ namespace frigobom_c
             // Executa a consulta
             foreach (var produto in prodx)
             {
+
+                string cipherText = produto.senha.Trim();
+                string decryptedText = CryptorEngine.Decrypt(cipherText, true);
+
                 builder.DataSource = produto.servidor;
                 builder.UserID = produto.usuario;
-                builder.Password = produto.senha;
+                builder.Password = decryptedText;
+                //builder.Password = produto.senha;
                 builder.InitialCatalog = produto.banco;
                 builder.ConnectTimeout = 60;
             }

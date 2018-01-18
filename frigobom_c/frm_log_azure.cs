@@ -1,23 +1,27 @@
-﻿using System;
+﻿using EnCryptDecrypt;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 using System.Xml.Linq;
-using EnCryptDecrypt;
 
 namespace frigobom_c
 {
-    public partial class frm_ver_dados : Form
+    public partial class frm_log_azure : Form
     {
         string caminho;
-        public frm_ver_dados()
+        public frm_log_azure()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void bt_verificar_Click(object sender, EventArgs e)
         {
             exibir_azure();
         }
@@ -30,12 +34,13 @@ namespace frigobom_c
             }
             return caminho;
         }
+
         private void exibir_azure()
         {
             try
             {
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-               
+
                 // adicionar um try caso o arquivo não exista
                 var prods = from p in XElement.Load((CaminhoDadosXML(caminho) + @"Dados\Conexoes.xml")).Elements("Conexao")
                             where p.Element("tipo").Value == "azure"
@@ -65,24 +70,14 @@ namespace frigobom_c
                 {
 
                     StringBuilder sb = new StringBuilder();
-                    
-        
 
-                    sb.Append(@"SELECT TOP(20)  [ID]
-                                              ,[NUMERO]
-                                              ,[ID_LOJA] as LOJA
-                                              ,[DIGITACAO]
-                                              ,[NOME_PESSOA]
-                                              ,[NOME_NF]
-                                              ,[ID_SEQ]
-                                              ,[NOME_PRODUTO]
-                                              ,[QUANTIDADE]
-                                              ,[PRECOUNITARIO]
-                                              ,[VALORTOTAL]
-                                              ,[NOME_GRUPO]
-                                              ,[NOME_SUBGRUPO]
-                                              ,[HORA_INCLUSAO]");
-                    sb.Append(" FROM dbo.vendas_frigobom_full ORDER BY id DESC;");
+
+
+                    sb.Append(@"SELECT top(1000) [F_log]
+                                                  ,[F_data]
+                                                  ,[F_ID]
+                                              ");
+                    sb.Append(" FROM [dbo].[V_Log]  order by F_id desc;");
                     String sql = sb.ToString();
 
                     SqlDataAdapter da = new SqlDataAdapter();
@@ -112,7 +107,7 @@ namespace frigobom_c
 
         }
 
-        private void frm_ver_dados_Load(object sender, EventArgs e)
+        private void frm_log_azure_Load(object sender, EventArgs e)
         {
             caminho = AppDomain.CurrentDomain.BaseDirectory;
         }

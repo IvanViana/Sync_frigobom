@@ -52,7 +52,7 @@
             this.Name = "frm_log";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Log";
+            this.Text = "Log Local";
             this.Load += new System.EventHandler(this.frm_log_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -13,6 +13,7 @@ namespace frigobom_c
 {
     public partial class frm_log : Form
     {
+        public string caminho;
         public frm_log()
         {
             InitializeComponent();
@@ -20,8 +21,21 @@ namespace frigobom_c
 
         private void frm_log_Load(object sender, EventArgs e)
         {
-            string arqLog = @"C:\Users\Ivan\Documents\FRIGOBOM DADOS.FDB\LOG.sql";
+             caminho = AppDomain.CurrentDomain.BaseDirectory;
+
+            string arqLog = CaminhoDadosXML(caminho) + @"Dados\LOG.sql";
+            //string arqLog = @"C:\Users\Ivan\Documents\FRIGOBOM DADOS.FDB\LOG.sql";
             LerArquivoTexto(arqLog);
+        }
+
+        public static string CaminhoDadosXML(string caminho)
+        {
+
+            if (caminho.IndexOf("\\bin\\Debug") != 0)
+            {
+                caminho = caminho.Replace("\\bin\\Debug", "");
+            }
+            return caminho;
         }
         private void LerArquivoTexto(string StrArquivo)
         {
